@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Username / E-Mail') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" class="form-control" name="login_key" required>
@@ -45,11 +45,9 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
                             </div>
                         </div>
                     </form>

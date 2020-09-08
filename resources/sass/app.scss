@@ -1,3 +1,23 @@
+// Bootstrap
 @import "~bootstrap";
+
+// DataTables
+@import "~datatables.net-bs4";
+
+// Font
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Font-Awesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+// Theme Variables
+@import "variables";
+
+// Custom Stuff (Table, Status-Pills, Scrollbar)
+@import "custom";
+
+// Basic construction
+@import "theme";
+
+// Toastr for Browser Notifies
 @import "~toastr";
-@import "./datatables";

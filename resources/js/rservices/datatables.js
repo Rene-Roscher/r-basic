@@ -7,9 +7,7 @@ const datatables = {
     },
     options(ajax, columns) {
         return {
-            // dom: '<"row justify-between g-2"<""f><"col-5 col-sm-6 text-right"<"datatable-filter"l>>><"datatable-wrap my-3"t><"row align-items-center"<"col-7 col-sm-12 col-md-9"p><"col-5 col-sm-12 col-md-3 text-left text-md-right"i>>',
             language: {
-                // lengthMenu: "<span class='d-none d-sm-inline-block'>Zeige</span><div class='form-control-select'> _MENU_ </div>",
                 url: window.location.origin + "/datatables/language.json",
             },
             serverSide: true,
