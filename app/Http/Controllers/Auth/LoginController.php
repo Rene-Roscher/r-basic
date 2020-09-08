@@ -86,4 +86,14 @@ class LoginController extends Controller
         return filter_var(\request('login_key'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        return $this->sendLoginResponse($request);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        return respond()->addMessage('Sie haben sich erfolgreich angemeldet.', 'success')->setRedirect(RouteServiceProvider::HOME)->response();
+    }
+
 }
