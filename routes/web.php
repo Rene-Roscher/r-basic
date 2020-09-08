@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::get('/logout', fn() => !Auth::logout() ? back()->withSuccess(strval('Sie haben sich erfolgreich abgemeldet.')) : abort(401))->name('logout')->middleware('auth');
 
 Route::view('/', 'welcome');
 
