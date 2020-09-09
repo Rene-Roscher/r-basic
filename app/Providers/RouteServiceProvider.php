@@ -21,19 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
-
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-
-        parent::boot();
-    }
+    public const HOME = '/manage';
 
     /**
      * Define the routes for the application.
@@ -46,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAuthWeb('manage', '\Manage');
     }
 
     /**
@@ -61,6 +49,14 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapAuthWeb($prefix, $namespace = '')
+    {
+        Route::prefix($prefix)
+            ->middleware(['web', 'auth'])
+            ->namespace($this->namespace.$namespace)
+            ->group(base_path("routes/${prefix}.php"));
     }
 
     /**

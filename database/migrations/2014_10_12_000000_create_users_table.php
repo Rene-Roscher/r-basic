@@ -14,10 +14,8 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            //'name', 'firstname', 'lastname', 'amount', 'email',
-            //        'language', 'avatar', 'state', 'password'
             $table->uuid('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
@@ -27,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->enum('state', ['OK', 'SUSPENDED', ''])->default('OK');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('slug')->unique();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

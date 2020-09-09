@@ -15,7 +15,7 @@ class RolePermissionSeeder extends Seeder
     {
         $arr = [
             'Super Admin' => [],
-            'Supporter' => [
+            'Team' => [
                 'user.list',
                 'user.show',
                 'user.update',
