@@ -1,4 +1,4 @@
-## About R-Services Advanced Laravel
+## About Advanced Laravel - R-Services
 - [Telegram-Bot-SDK](https://packagist.org/packages/irazasyed/telegram-bot-sdk) - irazasyed/telegram-bot-sdk
 - [Agent-Parser](https://packagist.org/packages/jenssegers/agent) - jenssegers/agent
 - [Human Regex](https://packagist.org/packages/mpociot/human-regex) - mpociot/human-regex
