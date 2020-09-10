@@ -8,7 +8,7 @@
     - [Array to XML](https://packagist.org/packages/spatie/array-to-xml) - spatie/array-to-xml
     - [Blade Javascript](https://packagist.org/packages/spatie/laravel-blade-javascript) - spatie/laravel-blade-javascript
     - [Media Library](https://packagist.org/packages/spatie/laravel-medialibrary) - spatie/laravel-medialibrary
-    - [Model States](https://packagist.org/packages/spatie/laravel-model-states) - spatie/laravel-model-states
+    - [Model States](https://packagist.org/packages/spatie/laravel-model-states) - spatie/laravel-model-states - (not compatible with yajra-datatables package 😪)
     - [Permission](https://packagist.org/packages/spatie/laravel-permission) - spatie/laravel-perrmission
     - [Sitemap](https://packagist.org/packages/spatie/laravel-sitemap) - spatie/laravel-sitemap
     - [Sluggable](https://packagist.org/packages/spatie/laravel-sluggable) - spatie/laravel-sluggable
