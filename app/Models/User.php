@@ -58,4 +58,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             ->saveSlugsTo('slug');
     }
 
+    public function sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
+
 }
