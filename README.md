@@ -16,3 +16,8 @@
     - [Validation Rules](https://packagist.org/packages/spatie/laravel-validation-rules) - spatie/laravel-validation-rules
 - [yajra/laravel-datatables-fractal](https://packagist.org/packages/yajra/laravel-datatables-fractal) - yajra/laravel-datatables-fractal
 - [yajra/laravel-datatables-oracle](https://packagist.org/packages/yajra/laravel-datatables-oracle) - yajra/laravel-datatables-oracle
+
+## Todo
+
+- Laravel Mail Viewer https://github.com/themsaid/laravel-mail-preview 
+- BotMan (Bot-Manager) https://github.com/botman/botman

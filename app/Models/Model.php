@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 use RServices\User;
 use Spatie\Sluggable\SlugOptions;
+use Yajra\DataTables\DataTableAbstract;
 
 /**
  * Class Model
@@ -14,6 +15,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int id
  * @property string created_at
  * @property string updated_at
+ * @method static DataTableAbstract datatables();
  */
 class Model extends \Illuminate\Database\Eloquent\Model
 {
@@ -47,6 +49,11 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return SlugOptions::create()
             ->generateSlugsFrom($this->slugField)
             ->saveSlugsTo($this->slugKey);
+    }
+
+    public function scopeDatatables($query)
+    {
+        return datatables($query);
     }
 
 }
