@@ -1,7 +1,8 @@
 const generate = {
-    string(length) {
+    string(length, numeric = true) {
         let c = 'abcdefghijklmnopqrstuvwxyz';
-        c += c.toUpperCase() + 1234567890;
+        if (numeric)
+            c += c.toUpperCase() + 1234567890;
         return '-'.repeat(length).replace(/./g, b => c[~~(Math.random() * 62)])
     },
     number(min, max){
