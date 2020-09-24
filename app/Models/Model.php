@@ -23,6 +23,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public $incrementing = false;
     protected $keyType = 'string';
+    
+	public $slugable = false;
     public $slugKey = 'slug';
     public $slugField = 'name';
 
@@ -30,8 +32,10 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     protected static function boot()
     {
-        /** Creating Uuid of User */
-        self::creating(fn(User $user) => $user->id = Uuid::uuid4());
+        self::creating(function (self $model) {
+            $model->id = Uuid::uuid4();
+            if ($model->slugable) $model->generateSlug();
+        });
         parent::boot();
     }
 
