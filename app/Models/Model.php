@@ -24,7 +24,6 @@ class Model extends \Illuminate\Database\Eloquent\Model
     public $incrementing = false;
     protected $keyType = 'string';
     
-	public $slugable = false;
     public $slugKey = 'slug';
     public $slugField = 'name';
 
@@ -34,7 +33,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
     {
         self::creating(function (self $model) {
             $model->id = Uuid::uuid4();
-            if ($model->slugable) $model->generateSlug();
+            if (property_exists($model, 'slugOptions')) $model->generateSlug();
         });
         parent::boot();
     }
