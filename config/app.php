@@ -174,7 +174,11 @@ return [
         // RServices\Providers\BroadcastServiceProvider::class,
         RServices\Providers\EventServiceProvider::class,
         RServices\Providers\RouteServiceProvider::class,
-
+        
+        /**
+         * RServices - Menu Builder
+         */
+        \RServices\Providers\MenuServiceProvider::class,
     ],
 
     /*
