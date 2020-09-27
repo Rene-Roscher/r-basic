@@ -32,60 +32,7 @@
 
         <div class="row mt-4">
             <div class="col-2 sidebar">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a href="" class="nav-link {{ sidebarcheck('manage') }} d-flex align-items-center pt-0">
-                            <i class="fa fa-cubes"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/about" class="nav-link d-flex align-items-center pt-0">
-                            <i class="fa fa-layer-group"></i>
-                            <span>Developments</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/about" class="nav-link d-flex align-items-center pt-0">
-                            <i class="fa fa-file-invoice"></i>
-                            <span>Transactions</span>
-                        </a>
-                    </li>
-                    @if (user()->roles()->count() >= 0)
-                        <li class="dropdown-divider mb-3"></li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/user') }}" class="nav-link {{ sidebarcheck('admin/user*') }} d-flex align-items-center pt-0">
-                                <i class="fa fa-users-cog"></i>
-                                <span>Users</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/transaction') }}" class="nav-link {{ sidebarcheck('admin/transaction*') }} d-flex align-items-center pt-0">
-                                <i class="fa fa-coins"></i>
-                                <span>Transactions</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/development') }}" class="nav-link {{ sidebarcheck('admin/development*') }} d-flex align-items-center pt-0">
-                                <i class="fa fa-layer-group"></i>
-                                <span>Developments</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/contract') }}" class="nav-link {{ sidebarcheck('admin/contract*') }} d-flex align-items-center pt-0">
-                                <i class="fa fa-file-alt"></i>
-                                <span>Contracts</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/bank') }}" class="nav-link {{ sidebarcheck('admin/bank*') }} d-flex align-items-center pt-0">
-                                <i class="fa fa-cogs"></i>
-                                <span>Bank-Connects</span>
-                            </a>
-                        </li>
-
-                    @endif
-                </ul>
+                {!! \RServices\Facades\MenuFacade::render() !!}
             </div>
             <div class="col-10">
                 @yield('content')

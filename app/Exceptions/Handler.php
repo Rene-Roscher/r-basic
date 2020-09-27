@@ -2,6 +2,7 @@
 
 namespace RServices\Exceptions;
 
+use Illuminate\Http\Exceptions\HttpResponseException;
 use RServices\Response\ResponseState;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
@@ -55,6 +56,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+		if (env('APP_DEBUG') && $request->ajax() && !$exception instanceof HttpResponseException)
+            respond()->addMessage($exception->getMessage(), 'error')->response();
         return parent::render($request, $exception);
     }
 
