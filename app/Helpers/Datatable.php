@@ -16,10 +16,12 @@ class Datatable
 
     private $columns;
     private $reload;
+    private $serverSide;
 
     public function __construct()
     {
         $this->columns = [];
+        $this->serverSide = null;
     }
 
     /**
@@ -57,11 +59,18 @@ class Datatable
         return $this;
     }
 
+    public function setServerSideProcessing()
+    {
+        $this->serverSide = true;
+        return $this;
+    }
+
     public function view($ajax, ...$columnNames)
     {
         $columns = $this->get();
         $reload = $this->reload;
-        return view('misc.table', compact('columns', 'ajax', 'columnNames', 'reload'))->render();
+        $serverSide = $this->serverSide;
+        return view('misc.table', compact('columns', 'ajax', 'columnNames', 'reload', 'serverSide'))->render();
     }
 
 }

@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered" style="width:100%" data-toggle="datatable" data-url="{{ $ajax }}" data-columns="{{ $columns }}">
+<table class="table table-padded" style="width:100%" data-toggle="datatable" data-url="{{ $ajax }}" data-columns="{{ $columns }}" data-serverSide="{{ isset($serverSide) && $serverSide }}">
     <thead>
     <tr>
         @foreach($columnNames as $column)

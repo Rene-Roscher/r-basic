@@ -2,15 +2,15 @@ const datatables = {
     init() {
         $('[data-toggle="datatable"]').each((_, element) => {
             let e = $(element);
-            e.DataTable(this.options(e.data('url'), e.data('columns')));
+            e.DataTable(this.options(e.data('url'), e.data('columns'), e.data('serverSide')));
         });
     },
-    options(ajax, columns) {
+    options(ajax, columns, serverSide) {
         return {
             language: {
                 url: window.location.origin + "/datatables/language.json",
             },
-            serverSide: true,
+            serverSide,
             processing: true,
             autoWidth: true,
             ajax: ajax,
