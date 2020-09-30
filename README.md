@@ -21,3 +21,7 @@
 
 - Laravel Mail Viewer https://github.com/themsaid/laravel-mail-preview 
 - BotMan (Bot-Manager) https://github.com/botman/botman
+
+
+## Methods Todo
+- Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
