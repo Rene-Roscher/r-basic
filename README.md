@@ -25,3 +25,4 @@
 
 ## Methods Todo
 - Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
+- Macros for Blueprint (->default()|uuid,softdeletes usw)
