@@ -4,8 +4,8 @@
 namespace RServices\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
-use RServices\User;
+use Illuminate\Database\Query\Builder;
+use RServices\Helpers\Traits\HasUuid;
 use Spatie\Sluggable\SlugOptions;
 use Yajra\DataTables\DataTableAbstract;
 
@@ -16,27 +16,20 @@ use Yajra\DataTables\DataTableAbstract;
  * @property string created_at
  * @property string updated_at
  * @method static DataTableAbstract datatables();
+ * @method static self|Builder search($source);
+ * @method static self create($attr);
  */
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasUuid;
 
     public $incrementing = false;
     protected $keyType = 'string';
-    
+
     public $slugKey = 'slug';
     public $slugField = 'name';
 
     public const DATE_FORMAT = 'd.m.Y - H:i';
-
-    protected static function boot()
-    {
-        self::creating(function (self $model) {
-            $model->id = Uuid::uuid4();
-            if (property_exists($model, 'slugOptions')) $model->generateSlug();
-        });
-        parent::boot();
-    }
 
     public function getRouteKeyName()
     {
@@ -56,7 +49,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public function scopeDatatables($query)
     {
-        return datatables($query);
+        return datatables()->eloquent($query);
     }
 
 }

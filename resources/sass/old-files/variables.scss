@@ -1,3 +1,5 @@
+//Body
+$body-bg: #f8fafc;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -21,19 +23,19 @@ $font-family-base: Nunito;
 $font-size-base: 0.95rem;
 $badge-font-size: 0.95rem;
 
-$primary: #00e090;
-$secondary: #2C2F33;
+$primary: #7746ec;
+$secondary: #dae1e7;
 $success: #51d88a;
 $info: #bcdefa;
 $warning: #ffa260;
 $danger: #ef5753;
 
-$body-bg: #2C2F33;//#f2f4f8;
+$body-bg: #ebebeb;
 
 $btn-focus-width: 0;
 
-$sidebar-nav-color: #10192a;
-$sidebar-icon-color: #00e090;
+$sidebar-nav-color: #2a5164;
+$sidebar-icon-color: #c3cbd3;
 
 $pill-link-active: $primary;
 
@@ -42,6 +44,3 @@ $header-border-color: #d5dfe9;
 $card-cap-bg: #fff;
 $card-bg-secondary: #fafafa;
 $card-shadow-color: #cdd8df;
-
-$dark: #23272A;
-

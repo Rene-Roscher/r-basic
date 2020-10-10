@@ -1,13 +1,5 @@
 body {
-    margin: 0 auto;
-    max-width: 115em; // 85em
     padding-bottom: 20px;
-    background-color: $body-bg;
-    color: #fff;
-}
-
-img {
-    max-width: 100% !important;
 }
 
 svg.icon {
@@ -16,9 +8,11 @@ svg.icon {
 }
 
 .header {
-    border-bottom: solid 1px #23272A;
+    border-bottom: solid 1px $header-border-color;
+
     svg.logo {
-        height: 2.7rem;
+        width: 2rem;
+        height: 2rem;
     }
 }
 

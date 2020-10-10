@@ -1,7 +1,7 @@
 <?php
 
 
-namespace RServices\Providers\Facades;
+namespace RServices\Facades;
 
 
 use Illuminate\Support\Facades\Facade;

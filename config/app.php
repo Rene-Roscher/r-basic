@@ -179,6 +179,11 @@ return [
          * RServices - Menu Builder
          */
         \RServices\Providers\MenuServiceProvider::class,
+		
+		/**
+         * Macro Service Provider
+         */
+        \RServices\Providers\MacroServiceProvider::class,
     ],
 
     /*
