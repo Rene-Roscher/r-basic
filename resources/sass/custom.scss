@@ -28,7 +28,7 @@ a {
 
 .element-box {
     border-radius: 6px;
-    background-color: $dark;
+    background-color: $body-bg;
 }
 
 .element-box {
@@ -216,7 +216,7 @@ a.el-tablo:hover {
 
 .dropzone {
     border: unset !important;
-    background: #23272A !important;
+    background: $body-bg !important;
 }
 
 a.el-tablo:hover .value {
@@ -241,9 +241,23 @@ a.el-tablo:hover .label {
 
 // End Info Card
 
-.form-control, .select2-selection--multiple, .select2-search__field, .card, .card-title, .card .card-header  {
+.form-control, .select2-selection--multiple, .select2-search__field  {
     color: #fff!important;
-    background-color: #23272A!important;
+    background-color: #2C2F33!important;
+    box-shadow: unset !important;
+    border: 1px solid $dark;
+    &:focus {
+        border: 1px solid #00e090 !important;
+    }
+}
+
+.form-check-input:checked {
+    color: #00e090 !important;
+}
+
+.card, .card-title, .card .card-header {
+    color: #fff!important;
+    background-color: $body-bg!important;
     border: unset !important;
     box-shadow: unset !important;
 }
@@ -255,7 +269,7 @@ a.el-tablo:hover .label {
 }
 
 .select2-results__option--selectable {
-    background-color: #23272A !important;
+    background-color: $body-bg !important;
     color: #00e090 !important;
     border-color: unset;
 }
@@ -276,12 +290,12 @@ a.el-tablo:hover .label {
 }
 
 .page-link {
-    background-color: $dark !important;
+    background-color: $body-bg !important;
     color: #fff !important;
     border: unset !important;
 }
 
-td {
+tr {
     color: #fff;
 }
 
@@ -330,7 +344,7 @@ th {
 .table.table-padded thead tr th {
     border: none;
     font-size: .81rem;
-    color: rgba(90, 99, 126, 0.49);
+    //color: rgba(90, 99, 126, 0.49);
     letter-spacing: 1px;
     padding: 0.3rem 1.1rem
 }
@@ -339,6 +353,7 @@ th {
     border-radius: 4px;
     -webkit-transition: all 0.1s ease;
     transition: all 0.1s ease;
+    color: #FFF;
 }
 
 .table.table-padded tbody tr:hover {
@@ -367,7 +382,7 @@ th {
 
 .table.table-padded tbody td {
     padding: 0.9rem 1.1rem;
-    background-color: #23272A;//#fff;
+    background-color: $body-bg;//#fff;
     border: none;
     border-right: 1px solid rgba(0, 0, 0, 0.03)
 }

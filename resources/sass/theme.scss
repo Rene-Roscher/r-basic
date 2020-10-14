@@ -22,10 +22,41 @@ svg.icon {
     }
 }
 
+.sidebar ul {
+    background: #23272A;
+    border-radius: 4px 0 0 4px;
+    padding: 8px 0 !important;
+    .active {
+        border-right: 2px solid #05d780 !important;
+    }
+    a:not(.active) {
+        &:hover {
+            border-right: 2px solid #05d780 !important;
+        }
+    }
+}
+
+.dropdown-menu {
+    background: #23272A !important;
+    .dropdown-item {
+        background: #23272A !important;
+        &:active {
+            border-left: 2px solid #05d780 !important;
+        }
+        &:hover {
+            border-left: 2px solid #FFF !important;
+        }
+    }
+}
+
+
+
 .sidebar .nav-item {
     a {
         color: $sidebar-nav-color;
-        padding: 0.5rem 0rem;
+        background-color: transparent !important;
+        //padding: 0.9rem 0rem;
+        padding-top: 8px !important;
 
         i {
             width: 1rem;
