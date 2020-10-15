@@ -31,11 +31,13 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-2 sidebar">
+            <div class="col-12 col-xl-2 col-md-4 col-sm-6 col-xs-6 sidebar mb-3 py-1">
                 {!! \RServices\Facades\MenuFacade::render() !!}
             </div>
-            <div class="col-10">
-                @yield('content')
+            <div class="col-12 col-xl-10 col-md-8 col-sm-6 col-xs-6 py-1">
+                <div class="p-3" style="background-color: #23272A">
+                    @yield('content')
+                </div>
             </div>
         </div>
     </div>
