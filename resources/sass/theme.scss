@@ -36,20 +36,34 @@ svg.icon {
     }
 }
 
-.dropdown-menu {
-    background: #23272A !important;
-    .dropdown-item {
+.dropdown {
+    background: #23272A;
+    padding: 0.85em 20px !important;
+    border-radius: 0.25em !important;
+    .dropdown-menu {
         background: #23272A !important;
-        &:active {
-            border-left: 2px solid #05d780 !important;
+        .dropdown-item {
+            background: #23272A !important;
+            border-left: 2px solid #23272A !important;
+            &:active {
+                border-left: 2px solid #05d780 !important;
+            }
+            &:hover {
+                border-left: 2px solid #05d780 !important;
+            }
         }
-        &:hover {
-            border-left: 2px solid #FFF !important;
+        &.show {
+            margin: 1em -1.3em !important;
+            min-width: 100% !important;
+        }
+    }
+    &:hover {
+        .dropdown-menu {
+            display: block;
+            min-width: 100%;
         }
     }
 }
-
-
 
 .sidebar .nav-item {
     a {
