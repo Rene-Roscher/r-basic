@@ -21,6 +21,7 @@ class Response
     private $redirect;
     private $headers;
     private $messages;
+    private $errors;
     private $transactionCode;
 
     public function getCode()
@@ -106,6 +107,22 @@ class Response
         return $this;
     }
 
+    /**
+     * @param mixed $errors
+     */
+    public function setErrors($errors): void
+    {
+        $this->errors = $errors;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
     public function responseCode()
     {
         if ($code = $this->code)
@@ -137,6 +154,7 @@ class Response
             'data' => $this->data,
             'messages' => is_array($this->messages) ? $this->messages : ($this->messages ?: null),
             'redirect' => $this->redirect ?: null,
+            'errors' => $this->errors,
         ], $this->responseCode(), $this->headers ?: [])->throwResponse();
     }
 

@@ -15,7 +15,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "irazasyed/telegram-bot-sdk": "^3.1",
         "jenssegers/agent": "^2.6",
-        "laravel/framework": "^7.24",
+        "laravel/framework": "^8.10",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.2",
         "mpociot/human-regex": "dev-master",

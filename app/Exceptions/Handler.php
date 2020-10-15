@@ -56,14 +56,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-		if (env('APP_DEBUG') && $request->ajax() && !$exception instanceof HttpResponseException)
+		if (env('APP_DEBUG') && $request->ajax() && !$exception instanceof HttpResponseException && !$exception instanceof ValidationException)
             respond()->addMessage($exception->getMessage(), 'error')->response();
+		if ($exception instanceof ValidationException && $request->ajax())
+		    return $this->invalidJson($request, $exception);
         return parent::render($request, $exception);
     }
 
     protected function invalidJson($request, ValidationException $exception)
     {
         $response = respond();
+        $response->setErrors($exception->errors());
         foreach ($exception->errors() as $error)
             $response->addMessage($error, 'error');
         $response->setStatus(ResponseState::INVALID)->response();

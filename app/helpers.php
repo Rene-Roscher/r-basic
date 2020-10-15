@@ -13,7 +13,8 @@ function user()
 }
 function sidebarcheck($uri)
 {
-    return request()->is($uri) ? 'active' : '';
+    if (str_starts_with($uri, '/')) $uri = \Illuminate\Support\Str::replaceFirst('/', '', $uri);
+    return request()->is($uri) ? 'active' : null;
 }
 
 /**
