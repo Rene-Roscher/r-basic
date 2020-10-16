@@ -29,6 +29,13 @@
 - amount($name = 'amount') | append 10,2 decimal with an default of 0.00
 - social2(['google', 'twitter', 'facebook']) | append social2 defaults to migration from provider | id, token, refresh_token and expires_in with prefix of provider (like google_id, usw...)
 
+## Menu Builder
+Using MenuBuilder Facade for build an Menu!
+- Go in MenuServiceProvider and append your nav-link with:
+Menu::add(Menu::element('Dashboard', '/manage', 'fa fa-home'));
+- Or append a Dropdown with:
+Menu::dropdown('Dropdown', 'fa fa-home')->add(Menu::element('Item in dropdown', '/drop'));
+
 # CRUD
 Do you want to using the Create-Read-Update-Delete System?
 
