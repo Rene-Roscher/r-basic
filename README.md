@@ -27,16 +27,14 @@
 - Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
 - Macros for Blueprint (->default()|uuid,softdeletes usw)
 
-## CRUD
+# CRUD
 Do you want to using the Create-Read-Update-Delete System?
 
 - Use the FormContract trait in your Model
 - Fill the $formFields and $dataTablesFields
 
-## Crud Example
+## Crud Example in the Model
 
-    ```php
-    
     public static $formFields = [
         'name:name|type:text',
         'name:email|type:email',
@@ -49,8 +47,8 @@ Do you want to using the Create-Read-Update-Delete System?
         'name' => 'Name',
         'email' => 'E-Mail'
     ];
-    ```
-## Available form-field-types
+    
+## Available formFieldTypes
 - name
 - type (all input-types: text,number,checkbox,range,select) | If using select is options required!
 - min
@@ -63,7 +61,7 @@ Do you want to using the Create-Read-Update-Delete System?
 - options | type=select is required! - (VALUE:TITLE or TITLE)
 
 ## dataTables-fields
-- 'data-key-query' => 'Table Name',
+- 'data-key-from-query' => 'Table Name',
 -> 'user.name' => 'Username',
 
 ## Crud Routing
