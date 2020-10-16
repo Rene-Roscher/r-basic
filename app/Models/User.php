@@ -7,9 +7,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use RServices\Helpers\Crud\FormContract;
+use RServices\Helpers\Crud\FormContractBuilder;
 use RServices\Helpers\Datatable;
 use RServices\Models\Model;
-use RServices\ModelView\ModelView;
+use RServices\Models\MonitorCategory;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -19,44 +21,32 @@ use Spatie\Sluggable\SlugOptions;
  * @package App
  * @property int id
  * @property string name
- * @property string firstname
- * @property string lastname
  * @property string email
- * @property float amount
- * @property string avatar
- * @property string state
- * @property string language
+ * @property string slug
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPassword
 {
-    use Notifiable, \Illuminate\Auth\Authenticatable, Authorizable, HasRoles, HasSlug, \Illuminate\Auth\Passwords\CanResetPassword;
-
-    public $slugKey = 'slug';
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
+    use Notifiable, \Illuminate\Auth\Authenticatable, Authorizable, HasRoles, HasSlug, \Illuminate\Auth\Passwords\CanResetPassword, FormContract;
 
     protected $fillable = [
-        'name', 'firstname', 'lastname', 'amount', 'email',
-        'language', 'avatar', 'state', 'password'
+        'name', 'email', 'password'
+    ];
+
+    public static $formFields = [
+        'name:name|type:text',
+        'name:email|type:email',
+        'name:password|type:text|only:create',
+    ];
+
+    public static $dataTablesFields = [
+        'id' => 'ID',
+        'name' => 'Name',
+        'email' => 'E-Mail'
     ];
 
     protected $hidden = [
         'remember_token',
     ];
-
-    protected $casts = [
-        'payload' => 'array'
-    ];
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
 
     public function sessions()
     {

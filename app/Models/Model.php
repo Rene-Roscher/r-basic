@@ -23,6 +23,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
 {
     use SoftDeletes, HasUuid;
 
+    static $formFields;
+    static $dataTablesFields;
+
     public $incrementing = false;
     protected $keyType = 'string';
 

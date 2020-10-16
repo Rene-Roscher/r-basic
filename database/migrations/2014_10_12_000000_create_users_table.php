@@ -17,15 +17,8 @@ class CreateUsersTable extends Migration
             $table->uuid('id');
             $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->string('firstname')->nullable();
-            $table->string('lastname')->nullable();
-            $table->decimal('amount', 10,2)->default(0.00);
-            $table->string('language')->nullable();
-            $table->longText('avatar')->nullable();
-            $table->enum('state', ['OK', 'SUSPENDED', ''])->default('OK');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
