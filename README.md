@@ -26,3 +26,49 @@
 ## Methods Todo
 - Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
 - Macros for Blueprint (->default()|uuid,softdeletes usw)
+
+## CRUD
+Do you want to using the Create-Read-Update-Delete System?
+
+- Use the FormContract trait in your Model
+- Fill the $formFields and $dataTablesFields
+
+## Crud Example
+
+    ```php
+    
+    public static $formFields = [
+        'name:name|type:text',
+        'name:email|type:email',
+        'name:password|type:text|only:create',
+        'name:state|type:select|options:PENDING:Pending,DONE:Finished',
+    ];
+
+    public static $dataTablesFields = [
+        'id' => 'ID',
+        'name' => 'Name',
+        'email' => 'E-Mail'
+    ];
+    ```
+## Available form-field-types
+- name
+- type (all input-types: text,number,checkbox,range,select) | If using select is options required!
+- min
+- max
+- step
+- only (if the input should be there for only one | create,update)
+- placeholder
+- value
+- label
+- options | type=select is required! - (VALUE:TITLE or TITLE)
+
+## dataTables-fields
+- 'data-key-query' => 'Table Name',
+-> 'user.name' => 'Username',
+
+## Crud Routing
+- Route::crud(\RServices\User::class);
+
+Here we worked with kebab and plural of the model name.
+Example for this UserItem Model:
+-> where the url would look like this /user-items
