@@ -22,10 +22,12 @@
 - Laravel Mail Viewer https://github.com/themsaid/laravel-mail-preview 
 - BotMan (Bot-Manager) https://github.com/botman/botman
 
+# Methods
 
-## Methods Todo
-- Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
-- Macros for Blueprint (->default()|uuid,softdeletes usw)
+## Blueprint
+- default(); | append uuid as id and softDeletes to migration
+- amount($name = 'amount') | append 10,2 decimal with an default of 0.00
+- social2(['google', 'twitter', 'facebook']) | append social2 defaults to migration from provider | id, token, refresh_token and expires_in with prefix of provider (like google_id, usw...)
 
 # CRUD
 Do you want to using the Create-Read-Update-Delete System?
