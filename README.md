@@ -22,7 +22,60 @@
 - Laravel Mail Viewer https://github.com/themsaid/laravel-mail-preview 
 - BotMan (Bot-Manager) https://github.com/botman/botman
 
+# Methods
 
-## Methods Todo
-- Select2 Blade Directive (@select2(route('ajax.source'), 'name', 'LabelName')
-- Macros for Blueprint (->default()|uuid,softdeletes usw)
+## Blueprint
+- default(); | append uuid as id and softDeletes to migration
+- amount($name = 'amount') | append 10,2 decimal with an default of 0.00
+- social2(['google', 'twitter', 'facebook']) | append social2 defaults to migration from provider | id, token, refresh_token and expires_in with prefix of provider (like google_id, usw...)
+
+## Menu Builder
+Using MenuBuilder Facade for build an Menu!
+- Go in MenuServiceProvider and append your nav-link with:
+Menu::add(Menu::element('Dashboard', '/manage', 'fa fa-home'));
+- Or append a Dropdown with:
+Menu::dropdown('Dropdown', 'fa fa-home')->add(Menu::element('Item in dropdown', '/drop'));
+
+# CRUD
+Do you want to using the Create-Read-Update-Delete System?
+
+- Use the FormContract trait in your Model
+- Fill the $formFields and $dataTablesFields
+
+## Crud Example in the Model
+
+    public static $formFields = [
+        'name:name|type:text',
+        'name:email|type:email',
+        'name:password|type:text|only:create',
+        'name:state|type:select|options:PENDING:Pending,DONE:Finished',
+    ];
+
+    public static $dataTablesFields = [
+        'id' => 'ID',
+        'name' => 'Name',
+        'email' => 'E-Mail'
+    ];
+    
+## Available formFieldTypes
+- name
+- type (all input-types: text,number,checkbox,range,select) | If using select is options required!
+- min
+- max
+- step
+- only (if the input should be there for only one | create,update)
+- placeholder
+- value
+- label
+- options | type=select is required! - (VALUE:TITLE or TITLE)
+
+## dataTables-fields
+- 'data-key-from-query' => 'Table Name',
+-> 'user.name' => 'Username',
+
+## Crud Routing
+- Route::crud(\RServices\User::class);
+
+Here we worked with kebab and plural of the model name.
+Example for this UserItem Model:
+-> where the url would look like this /user-items
