@@ -14,6 +14,7 @@ use RServices\Helpers\Menu\MenuElement;
  * @package App\Providers\Facades
  * @method static MenuBuilder add(MenuElement $element)
  * @method static MenuElement element($display, $href, $icon = '', $permission = null)
+ * @method static MenuElement model($model, $icon = '', $permission = null)
  * @method static MenuDropdown dropdown($display, $icon, $permission = null)
  * @method static MenuElement get($key)
  * @method static set($key, $value)

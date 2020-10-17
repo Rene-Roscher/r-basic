@@ -5,6 +5,7 @@ namespace RServices\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use RServices\Helpers\Button\ButtonBuilder;
@@ -33,28 +34,31 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
         Router::macro('crud', function ($model) {
-            \Route::prefix(Str::kebab(Str::plural(basename($model))))->name($name = sprintf('%s.%s.', 'manage', strtolower(basename($model))))->group(function () use ($model, $name) {
-                \Route::get('/', fn() => viewDataTables(\route(sprintf('%slist', $name)), array_keys($model::$dataTablesFields), array_values($model::$dataTablesFields)));
+            $name = sprintf('%s.%s', 'manage', strtolower(basename($model)));
+            \Route::prefix(Str::kebab(Str::plural(basename($model))))->group(function () use ($model, $name) {
+                \Route::get('/', fn() => viewDataTables(\route(sprintf('%s.list', $name)), array_keys($model::$dataTablesFields), array_values($model::$dataTablesFields),
+                    ButtonBuilder::create()->addBlank(\route(sprintf('%s.create', $name)), '<i class="fa fa-plus mr-1"></i> Create', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make())
+                )->name("$name.view");
                 \Route::get('/list', fn() => $model::datatables()
                     ->addColumn('action', fn($entry) => ButtonBuilder::create()
-                        ->addEdit(\route(sprintf('%sedit', $name), compact('entry')))->make())
-                    ->make())->name('list');
-                \Route::get('/create', fn(Request $request) => $model::createForm(\route(sprintf('%screate', $name))))->name('create');
+                        ->addEdit(\route(sprintf('%s.edit', $name), compact('entry')))->make())
+                    ->make())->name("$name.list");
+                \Route::get('/create', fn(Request $request) => $model::createForm(\route(sprintf('%s.create', $name))))->name("$name.create");
                 \Route::post('/create', function (Request $request) use ($model, $name) {
                     if (array_key_exists('password', $request->all()))
                         if ($model instanceof User)
                             $request->all()['password'] = \Hash::make($request->all()['password']);
                         else $request->all()['password'] = encrypt($request->all()['password']);
                     ($entry = new $model($request->all()))->save();
-                    return respond()->addMessage($entry->createdMessage(), 'success')->setRedirect(\route(sprintf('%sshow', $name), compact('entry')))->response();
-                })->name('create');
+                    return respond()->addMessage($entry->createdMessage(), 'success')->setRedirect(\route(sprintf('%s.show', $name), compact('entry')))->response();
+                })->name("$name.create");
                 \Route::prefix('{entry}')->group(function () use ($model, $name) {
-                    \Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%supdate', $name), compact('entry'))))->name('edit');
+                    \Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%s.update', $name), compact('entry'))))->name("$name.edit");
                     \Route::post('/update', function (Request $request, $entry) use ($model) {
                         $entry = $model::findOrFail($entry);
                         $entry->update($request->all());
                         return respond()->addMessage($entry->updatedMessage(), 'success')->response();
-                    })->name('update');
+                    })->name("$name.update");
                 });
             });
         });

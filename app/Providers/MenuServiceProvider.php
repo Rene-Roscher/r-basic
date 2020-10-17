@@ -22,8 +22,8 @@ class MenuServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Menu::add(Menu::element('Dashboard', '/manage', 'fa fa-cubes'));
-        Menu::add(Menu::element('Transactions', '/manage/transactions', 'fa fa-layer-group'));
+        Menu::add(Menu::element('Dashboard', '/manage', 'fa fa-home'));
+		Menu::add(Menu::model(User::class));
     }
 
 }

@@ -15,12 +15,14 @@ class Datatable
     }
 
     private $columns;
+    private $columnNames;
     private $reload;
     private $serverSide;
 
     public function __construct()
     {
         $this->columns = [];
+        $this->columnNames = [];
         $this->serverSide = null;
     }
 
@@ -45,6 +47,8 @@ class Datatable
 
     public function addAction()
     {
+        if (!array_key_exists('action', $this->columnNames))
+            $this->columnNames['action'] = '#';
         return $this->put('action', false, false);
     }
 
@@ -67,10 +71,35 @@ class Datatable
 
     public function view($ajax, ...$columnNames)
     {
+        if (count($this->columnNames) > 0)
+            $columnNames = $this->columnNames;
         $columns = $this->get();
         $reload = $this->reload;
         $serverSide = $this->serverSide;
         return view('misc.table', compact('columns', 'ajax', 'columnNames', 'reload', 'serverSide'))->render();
+    }
+
+    /**
+     * @param array $columnNames
+     */
+    public function setColumnNames(array $columnNames): void
+    {
+        $this->columnNames = $columnNames;
+    }
+
+    public function getColumnNames()
+    {
+        return json_encode($this->columnNames);
+    }
+
+    /**
+     * @param array $columns
+     */
+    public function setColumns(array $columns)
+    {
+        foreach ($columns as $column)
+            $this->put($column);
+        return $this;
     }
 
 }
