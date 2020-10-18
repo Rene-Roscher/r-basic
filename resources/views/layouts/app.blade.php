@@ -21,10 +21,11 @@
             </svg>
             <div class="dropdown ml-auto">
                 <span class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class='fa fa-user mr-1 text-primary'></i> {{ user()->name }}
+                    <img src="https://eu.ui-avatars.com/api/?background=00e091&color=fff&bold=true&name={{ user()->name }}" class="avatar-logo" alt>
+                    {{ user()->name }}
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    <a class="dropdown-item" href="">Profile</a>
+                    <a class="dropdown-item" href="{{ route('manage.profile.view') }}">Profile</a>
                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>

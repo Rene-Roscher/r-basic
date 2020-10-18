@@ -36,6 +36,11 @@ class ButtonBuilder
         return $this->add('delete', $href, $title, $class);
     }
 
+    public function addJsDelete($href, $title = 'Delete', $class = 'danger')
+    {
+        return $this->add('delete', $href, $title, $class);
+    }
+
     public function add($button, $href, $title = 'Show', $class = 'primary', $margin = true)
     {
         $this->html .= ButtonHelper::$button($href, $title, $class, $margin && $this->buttons >= 1 ? 'ml-2' : null);

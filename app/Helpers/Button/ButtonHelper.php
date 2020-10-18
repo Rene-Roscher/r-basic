@@ -19,7 +19,7 @@ class ButtonHelper
 
     public static function delete($href, $title = 'Delete', $class = 'danger', $margin = null)
     {
-        return "<a type=\"button\" class=\"btn btn-sm font-weight-bold text-white {$margin} btn-{$class}\" onclick='confirm(\"Delete?\") ? location.href = \"{$href}\" : null'>$title</a>";
+        return "<a type=\"button\" class=\"btn btn-sm font-weight-bold text-white {$margin} btn-{$class}\" onclick='confirm(\"Delete?\") ? rservices.request.get(\"$href\").handle() : null'>$title</a>";
     }
 
 }

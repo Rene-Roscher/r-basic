@@ -4,6 +4,8 @@
 namespace RServices\Helpers\Crud;
 
 
+use RServices\Helpers\Button\ButtonBuilder;
+
 trait FormContract
 {
 
@@ -30,6 +32,11 @@ trait FormContract
     public function deletedMessage()
     {
         return "The Entry was deleted.";
+    }
+
+    public static function getDataTablesButtons()
+    {
+        return ButtonBuilder::create()->addEdit(\route(sprintf('manage.%s.create', strtolower(basename(static::class)))), '<i class="fa fa-plus mr-1"></i> Create', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make();
     }
 
 }

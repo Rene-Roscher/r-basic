@@ -36,6 +36,29 @@ svg.icon {
     }
 }
 
+.avatar-logo {
+    height: 2.4em;
+    margin-right: 0.4em;
+    border-radius: 25px;
+}
+
+svg {
+    .cls-1 {
+        fill: #FFF;
+        &:hover {
+            fill: #00e091;
+        }
+    }
+
+    .cls-2 {
+        fill: #00e091;
+        &:hover {
+            fill: #FFF;
+        }
+    }
+
+}
+
 .dropdown {
     background: #23272A;
     padding: 0.85em 20px !important;
@@ -69,7 +92,6 @@ svg.icon {
     a {
         color: $sidebar-nav-color;
         background-color: transparent !important;
-        //padding: 0.9rem 0rem;
         padding-top: 8px !important;
 
         i {

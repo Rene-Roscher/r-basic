@@ -13,8 +13,12 @@ function user()
 }
 function sidebarcheck($uri)
 {
-    if (str_starts_with($uri, '/')) $uri = \Illuminate\Support\Str::replaceFirst('/', '', $uri);
-    return request()->is($uri) ? 'active' : null;
+    if (count($uri = explode('.', $uri)) == 3)
+        return request()->routeIs("manage.$uri[1].*") ? 'active' : null;
+    if (count($uri) == 2)
+        return request()->routeIs("manage.$uri[1]") ? 'active' : null;
+    if (count($uri) == 0)
+        return request()->routeIs("$uri*") ? 'active' : null;
 }
 
 /**
@@ -40,4 +44,12 @@ function viewDataTables($route, array $columns, array $titles = null, $withActio
     return view('misc.datatables', [
         'view' => $instance->view($route)
     ]);
+}
+function fontAwesome($class, $type = 'fa')
+{
+    return \RServices\Helpers\FontAwesome::i($class, $type);
+}
+function model_path($model)
+{
+    return sprintf('RServices\Models\%s', $model);
 }

@@ -94,6 +94,7 @@ class Datatable
 
     /**
      * @param array $columns
+     * @return Datatable
      */
     public function setColumns(array $columns)
     {

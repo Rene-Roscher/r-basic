@@ -20,7 +20,7 @@ class MenuBuilder extends MenuDropdown
 
     public static function model($model, $icon = 'fa fa-layer-group', $key = null) {
         return new MenuElement(ucwords(Str::snake(Str::plural(basename($model)), ' ')),
-            \url("manage/".Str::kebab(Str::plural(basename($model)))), $icon, $key);
+            "manage.".Str::kebab(strtolower(basename($model))).".view", $icon, $key);
     }
 
     public function render()
