@@ -17,6 +17,14 @@ select:-webkit-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+option:checked {
+    box-shadow: 0 0 10px 100px #00e090 inset;
+    border-radius: 0.25em;
+    margin-top: .1em;
+    background: #FFF;
+    color: #FFF !important;
+}
+
 a {
     color: #fff !important;
     i {
