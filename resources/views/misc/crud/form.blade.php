@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('before_content')
-    {!! \RServices\Helpers\Button\ButtonBuilder::create()->addEdit(url()->previous(), '<i class="fa fa-arrow-left mr-1"></i> Back', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make() !!}
+    {!! \RServices\Helpers\Button\ButtonBuilder::create()->addEdit(route(str_replace('edit', 'view', request()->route()->getAction('as'))), '<i class="fa fa-arrow-left mr-1"></i> Back', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make() !!}
 @endsection
 
 @section('content')
