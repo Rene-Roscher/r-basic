@@ -12,6 +12,11 @@ class FontAwesome
         return "<i class\"$type $class\"></i>";
     }
 
+    public static function c($class, $type = 'fa')
+    {
+        return "$type $class";
+    }
+
     const FA_500PX = 'fa-500px';
     const FA_ACCESSIBLE_ICON = 'fa-accessible-icon';
     const FA_ACCUSOFT = 'fa-accusoft';

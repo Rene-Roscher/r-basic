@@ -11,7 +11,7 @@ trait FormContract
 
     public function updateForm($action = null)
     {
-        return FormContractBuilder::create()->makeFrom(self::class, $this->toArray(), $action, 'Save');
+        return FormContractBuilder::create()->makeFrom(self::class, $this, $action, 'Save');
     }
 
     public static function createForm($action = null)

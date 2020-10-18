@@ -34,8 +34,6 @@ class FormContractBuilder
 
     public function makeFrom($model, $source = null, $action = null, $submitTitle = null, $method = 'POST')
     {
-        if (is_object($source))
-            $source = $source->toArray();
         $this->addFromArray($model::$formFields, $source);
         return $this->make($action, $submitTitle, $method);
     }
@@ -49,6 +47,12 @@ class FormContractBuilder
     public function addRelation($name, $label, array $options, $value = null, $col = null)
     {
         $this->inputs .= view('misc.crud.form-group-select', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
+        return $this;
+    }
+
+    public function addMultiRelation($name, $label, array $options, $values = null, $col = null)
+    {
+        $this->inputs .= view('misc.crud.form-group-multi-select', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
         return $this;
     }
 
@@ -89,8 +93,10 @@ class FormContractBuilder
         return $this;
     }
 
-    public function addFromArray(array $formFields, array $source = null)
+    public function addFromArray(array $formFields, $source = null)
     {
+        $obj = $source;
+        $source = $source ? $source->toArray() : null;
         $kind = ($source ? 'create' : 'update');
         foreach ($formFields as $field) {
             $args = [];
@@ -115,6 +121,15 @@ class FormContractBuilder
                     $args['name'], $label,
                     $this->selectRelationTransform((model_path(str_replace(' ', '', ucwords(Str::snake($args['relation'], ' ')))))::all()->toArray(), $valueKey, $primaryKey),
                     array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null),
+                    array_key_exists('col', $args) ? $args['col'] : null);
+            } else if ($args['type'] == 'multiSelect' && array_key_exists('relation', $args)) {
+                $valueKey = count($relationVars = explode(',', $args['relation'])) != 0 ? ($relationVars)[1] : 'id';
+                $primaryKey = (isset($relationVars) && count($relationVars) == 3) ? $relationVars[2] : 'id';
+                if (isset($relationVars)) $args['relation'] = $relationVars[0];
+                $this->addMultiRelation(
+                    $args['name'], $label,
+                    $this->selectRelationTransform((model_path(str_replace(' ', '', ucwords(Str::snake($args['relation'], ' ')))))::all()->toArray(), $valueKey, $primaryKey),
+                    is_object($obj) ? collect($obj->{Str::plural($args['relation'])})->map(fn($x) => $x[$primaryKey])->toArray() : ['X'],
                     array_key_exists('col', $args) ? $args['col'] : null);
             } else $this->add($args['name'], $args['type'],
                 $label,
@@ -144,6 +159,13 @@ class FormContractBuilder
     }
 
     function selectRelationTransform($args, $valueKey, $primaryKey = 'id')
+    {
+        $arr = [];
+        foreach ($args as $item) $arr[$item[$primaryKey]] = $item[$valueKey];
+        return $arr;
+    }
+
+    function multiSelectRelationTransform($args, $valueKey, $primaryKey = 'id')
     {
         $arr = [];
         foreach ($args as $item) $arr[$item[$primaryKey]] = $item[$valueKey];

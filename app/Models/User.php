@@ -33,9 +33,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     public static $formFields = [
-        'name:name|type:text',
-        'name:email|type:email',
-        'name:password|type:text|only:create',
+        'name:name|type:text|col:6',
+        'name:email|type:email|col:6',
+        'name:password|type:text|only:create|col:6',
+        'name:roles|type:multiSelect|relation:role,name,name|col:6|only:update',
+        'name:permissions|type:multiSelect|relation:permission,name,name|col:6|only:update',
     ];
 
     public static $dataTablesFields = [
@@ -51,6 +53,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function sessions()
     {
         return $this->hasMany(Session::class);
+    }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        $this->syncPermissions(array_key_exists('permissions', $attributes) ? array_values($attributes['permissions']) : []);
+        $this->syncRoles(array_key_exists('roles', $attributes) ? array_values($attributes['roles']) : []);
+        return parent::update($attributes, $options);
     }
 
 }
