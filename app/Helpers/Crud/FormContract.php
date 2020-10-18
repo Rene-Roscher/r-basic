@@ -5,6 +5,7 @@ namespace RServices\Helpers\Crud;
 
 
 use RServices\Helpers\Button\ButtonBuilder;
+use RServices\User;
 
 trait FormContract
 {
@@ -21,22 +22,34 @@ trait FormContract
 
     public function updatedMessage()
     {
-        return "The Entry was successfuly saved.";
+        return trans('crud.updated');
     }
 
     public function createdMessage()
     {
-        return "The Entry was created.";
+        return trans('crud.created');
     }
 
     public function deletedMessage()
     {
-        return "The Entry was deleted.";
+        return trans('crud.deleted');
     }
 
-    public static function getDataTablesButtons()
+    public static function getTableViewButtons()
     {
         return ButtonBuilder::create()->addEdit(\route(sprintf('manage.%s.create', strtolower(basename(static::class)))), '<i class="fa fa-plus mr-1"></i> Create', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make();
+    }
+
+    public static function columnAction($entry, $name)
+    {
+        return ButtonBuilder::create()->addEdit(\route(sprintf('%s.edit', $name), compact('entry')))
+            ->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))->make();
+    }
+
+    public static function toDataTables($entry, $name)
+    {
+        $dataTables = method_exists($entry, 'datatables') ? $entry::datatables() : datatables()->eloquent($entry::query());
+        return $dataTables->addColumn('action', fn($entry) => $entry::columnAction($entry, $name))->make();
     }
 
 }

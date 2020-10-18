@@ -10,26 +10,28 @@ use Illuminate\Support\Str;
 class MenuBuilder extends MenuDropdown
 {
 
-    public static function dropdown($display, $icon, $key = null) {
+    public static function dropdown($display, $icon, $key = null)
+    {
         return new MenuDropdown($display, $icon, $key);
     }
 
-    public static function element($display, $href, $icon = 'icon ni ni-dot', $key = null) {
+    public static function element($display, $href, $icon = 'icon ni ni-dot', $key = null)
+    {
         return new MenuElement($display, $href, $icon, $key);
     }
 
-    public static function model($model, $icon = 'fa fa-layer-group', $key = null) {
+    public static function model($model, $icon = 'fa fa-layer-group', $permission = true)
+    {
         return new MenuElement(ucwords(Str::snake(Str::plural(basename($model)), ' ')),
-            "manage.".Str::kebab(strtolower(basename($model))).".view", $icon, $key);
+            "manage." . ($name = Str::kebab(strtolower(basename($model)))) . ".view", $icon, ($permission ? "$name.list" : null));
     }
 
     public function render()
     {
         $rendered = '';
         foreach ($this->getElements() as $element) {
-            if(!empty($element->getPermission())) {
-                if (user()->hasPermissionTo($element->getPermission()))
-                    $rendered .= $element->render();
+            if (!empty($element->getPermission())) {
+                if (user()->can($element->getPermission())) $rendered .= $element->render();
                 continue;
             }
             $rendered .= $element->render();
