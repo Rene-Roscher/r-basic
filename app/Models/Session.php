@@ -1,9 +1,11 @@
 <?php
 
-namespace App;
+namespace RServices\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Agent\Agent;
+use RServices\Helpers\Button\ButtonBuilder;
+use RServices\Helpers\Crud\FormContract;
 
 /**
  * Class Account
@@ -25,10 +27,20 @@ class Session extends Model
         'id', 'user_id', 'ip_address', 'user_agent', 'payload'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    use FormContract;
+
+    public static $formFields = [
+        'name:user_id|type:text',
+        'name:ip_address|type:text',
+        'name:payload|type:text',
+        'name:user_id|type:multiSelect|relation:user,name|col:4|only:update',
+    ];
+
+    public static $dataTablesFields = [
+        'id' => 'ID',
+        'user_id' => 'User',
+        'ip_address' => 'IP-Address',
+    ];
 
     public function payload()
     {
@@ -63,6 +75,9 @@ class Session extends Model
         return $this->agent->browser();
     }
 
-
+    public static function columnAction($entry, $name)
+    {
+        return ButtonBuilder::create()->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))->make();
+    }
 
 }

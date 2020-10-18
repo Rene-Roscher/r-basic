@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use RServices\Helpers\Button\ButtonBuilder;
 use RServices\Helpers\Crud\FormContract;
 use RServices\Helpers\Crud\FormContractBuilder;
 use RServices\Helpers\Datatable;
@@ -60,6 +61,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->syncPermissions(array_key_exists('permissions', $attributes) ? array_values($attributes['permissions']) : []);
         $this->syncRoles(array_key_exists('roles', $attributes) ? array_values($attributes['roles']) : []);
         return parent::update($attributes, $options);
+    }
+
+    public static function columnAction($entry, $name)
+    {
+        return ButtonBuilder::create()
+            ->addBlank(\route(sprintf('%s.signInto', $name), compact('entry')), 'Login', 'dark')
+            ->addEdit(\route(sprintf('%s.edit', $name), compact('entry')))
+            ->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))->make();
     }
 
 }

@@ -24,6 +24,7 @@ class MenuServiceProvider extends ServiceProvider
 		Menu::add(Menu::model(User::class, FontAwesome::c(FontAwesome::FA_USERS_COG)));
 		Menu::add(Menu::model(Role::class, FontAwesome::c(FontAwesome::FA_ALIGN_RIGHT)));
         Menu::add(Menu::model(Permission::class, FontAwesome::c(FontAwesome::FA_LIST)));
+		Menu::add(Menu::model(Session::class, FontAwesome::c(FontAwesome::FA_USER_SECRET)));
     }
 
 }
