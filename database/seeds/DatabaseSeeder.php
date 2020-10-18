@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
             'password' => \Illuminate\Support\Facades\Hash::make('123admin456'),
             'created_at' => now(),
         ]))->save();
+        $user->assignRole('Super Admin');
     }
 }

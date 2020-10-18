@@ -15,12 +15,16 @@ class RolePermissionSeeder extends Seeder
     {
         $arr = [
             'Super Admin' => [],
-            'Team' => [
-                'user.list',
-                'user.show',
-                'user.update',
-            ],
+            'Team' => [],
         ];
+        foreach (['user', 'session', 'role', 'permission'] as $i)
+            $arr['Team'] = array_merge([
+                "$i.list",
+                "$i.show",
+                "$i.update",
+                "$i.create",
+                "$i.delete",
+            ],$arr['Team']);
         foreach ($arr as $role => $permissions) {
             $role = Role::create(['name' => $role]);
             foreach ($permissions as $permission) {

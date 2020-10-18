@@ -14,11 +14,12 @@ function user()
 function sidebarcheck($uri)
 {
     if (count($uri = explode('.', $uri)) == 3)
-        return request()->routeIs("manage.$uri[1].*") ? 'active' : null;
+        return request()->routeIs("$uri[0].$uri[1].*") ? 'active' : null;
     if (count($uri) == 2)
-        return request()->routeIs("manage.$uri[1]") ? 'active' : null;
+        return request()->routeIs("$uri[0].$uri[1]") ? 'active' : null;
     if (count($uri) == 0)
         return request()->routeIs("$uri*") ? 'active' : null;
+    throw new LogicException('No Route-Named Schema found.');
 }
 
 /**
