@@ -48,7 +48,6 @@ class RouteServiceProvider extends ServiceProvider
                     if (array_key_exists('password', $request->all()))
                         if ($model == User::class) $request->offsetSet('password', \Hash::make($request->all()['password']));
                         else $request->offsetSet('password', encrypt($request->all()['password']));
-                        dd($request->all());
                     ($entry = new $model($request->all()))->save();
                     return respond()->addMessage($entry->createdMessage(), 'success')->setRedirect(\route(sprintf('%s.edit', $name), compact('entry')))->response();
                 })->name("$name.create");
