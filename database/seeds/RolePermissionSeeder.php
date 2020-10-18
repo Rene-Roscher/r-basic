@@ -25,6 +25,9 @@ class RolePermissionSeeder extends Seeder
                 "$i.create",
                 "$i.delete",
             ],$arr['Team']);
+		$arr['Team'] = array_merge($arr['Team'], [
+            'user.signinto',
+        ]);
         foreach ($arr as $role => $permissions) {
             $role = Role::create(['name' => $role]);
             foreach ($permissions as $permission) {
