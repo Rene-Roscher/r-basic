@@ -54,3 +54,15 @@ function model_path($model)
 {
     return sprintf('RServices\Models\%s', $model);
 }
+function getTypeOfValue($value)
+{
+    if ($value == 'true' || $value == 'false') return 'checkbox';
+    switch (gettype($value)) {
+        case "integer":
+            return 'number';
+        case "boolean":
+            return 'checkbox';
+        default:
+            return 'text';
+    }
+}

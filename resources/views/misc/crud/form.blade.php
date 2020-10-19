@@ -27,3 +27,7 @@
     @endif
 </form>
 @endsection
+
+@section('scripts')
+    @stack('script')
+@endsection

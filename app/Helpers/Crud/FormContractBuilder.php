@@ -56,6 +56,12 @@ class FormContractBuilder
         return $this;
     }
 
+    public function addTextarea($name, $label, $value = null, $col = null, $kind = null)
+    {
+        $this->inputs .= view('misc.crud.form-group-textarea', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
+        return $this;
+    }
+
     public function add($name, $type, $label, $placeholder = null, $value = null, $min = null, $max = null, $step = null, $col = null, $nullable = false)
     {
         $this->inputs .= view('misc.crud.form-group', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
@@ -131,6 +137,8 @@ class FormContractBuilder
                     $this->selectRelationTransform((model_path(str_replace(' ', '', ucwords(Str::snake($args['relation'], ' ')))))::all()->toArray(), $valueKey, $primaryKey),
                     is_object($obj) ? collect($obj->{Str::plural($args['relation'])})->map(fn($x) => $x[$primaryKey])->toArray() : ['X'],
                     array_key_exists('col', $args) ? $args['col'] : null, array_key_exists('nullable', $args));
+            } else if ($args['type'] == 'textarea') {
+                $this->addTextarea($args['name'], $label, array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null), array_key_exists('col', $args) ? $args['col'] : null, array_key_exists('kind', $args) ? $args['kind'] : null);
             } else $this->add($args['name'], $args['type'],
                 $label,
                 array_key_exists('placeholder', $args) ? $args['placeholder'] : null,
