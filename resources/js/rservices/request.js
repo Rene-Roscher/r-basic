@@ -8,6 +8,7 @@ const handle = async (request) => {
         });
     if (response.redirect != null) setTimeout(() => location.href = response.redirect, 300);
     rservices.cache.isRequesting = false;
+    $('[data-toggle="datatable"]').DataTable().ajax.reload();
     return response;
 };
 

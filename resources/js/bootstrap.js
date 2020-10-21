@@ -1,6 +1,8 @@
 import 'bootstrap';
+
 window._ = require('lodash');
 import * as $ from 'jquery';
+
 window.$ = window.jQuery = $;
 
 // DataTable jQuery
@@ -10,6 +12,8 @@ require('datatables.net-bs4');
 import * as rservices from './rservices/';
 
 import 'popper.js';
+
+window.tinymce = require('tinymce');
 
 // For requesting
 window.axios = require('axios');

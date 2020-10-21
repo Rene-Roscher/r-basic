@@ -40,6 +40,9 @@ const form = {
             let form = $(event.target);
             let button = form.find('[type="submit"]');
             let formData = new FormData(event.target);
+            form.find('[type="checkbox"]').each((_, ele) => {
+                formData.set($(ele).attr('name'), $(ele).is(':checked'))
+            });
             let bs = buttonState.setPending(button);
             request.post(form.attr('action'), formData).handle().then(validation.handle).then(() => bs.setDone());
         })

@@ -68,9 +68,9 @@ class FormContractBuilder
         return $this;
     }
 
-    public function addText($name, $label, $placeholder = null, $value = null)
+    public function addText($name, $label, $col = null, $value = null, $placeholder = null)
     {
-        return $this->add($name, 'text', $label, $placeholder, $value);
+        return $this->add($name, 'text', $label, $placeholder, $value, null, null, null, $col);
     }
 
     public function addRange($name, $label, $min, $max, $step = null, $placeholder = null, $value = null)

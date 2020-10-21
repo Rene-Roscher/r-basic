@@ -9,7 +9,6 @@ use RServices\User;
 
 trait FormContract
 {
-
     public function updateForm($action = null)
     {
         return FormContractBuilder::create()->makeFrom(self::class, $this, $action, 'Save');
@@ -42,14 +41,25 @@ trait FormContract
 
     public static function columnAction($entry, $name)
     {
-        return ButtonBuilder::create()->addEdit(\route(sprintf('%s.edit', $name), compact('entry')))
-            ->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))->make();
+        return ButtonBuilder::create()
+            ->addEdit(\route(sprintf('%s.edit', $name), compact('entry')))
+            ->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))
+            ->make();
     }
 
     public static function toDataTables($entry, $name)
     {
         $dataTables = method_exists($entry, 'datatables') ? $entry::datatables() : datatables()->eloquent($entry::query());
-        return $dataTables->addColumn('action', fn($entry) => $entry::columnAction($entry, $name))->make();
+        if (!is_null($transformer = $entry::dataTablesTransformer($columnAction = $entry::columnAction($entry, $name))))
+            $dataTables = $dataTables->setTransformer($transformer);
+        else
+            $dataTables->addColumn('action', fn($entry) => $columnAction);
+        return $dataTables->make();
+    }
+
+    public static function dataTablesTransformer()
+    {
+        return null;
     }
 
 }
