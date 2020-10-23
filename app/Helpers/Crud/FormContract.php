@@ -50,11 +50,9 @@ trait FormContract
     public static function toDataTables($entry, $name)
     {
         $dataTables = method_exists($entry, 'datatables') ? $entry::datatables() : datatables()->eloquent($entry::query());
-        if (!is_null($transformer = $entry::dataTablesTransformer($columnAction = $entry::columnAction($entry, $name))))
-            $dataTables = $dataTables->setTransformer($transformer);
-        else
-            $dataTables->addColumn('action', fn($entry) => $columnAction);
-        return $dataTables->make();
+        if (!is_null($transformer = $entry::dataTablesTransformer($entry::columnAction($entry, $name))))
+            return $dataTables->setTransformer($transformer)->make();
+        return $dataTables->addColumn('action', fn($entry) => $entry::columnAction($entry, $name))->make();
     }
 
     public static function dataTablesTransformer()
