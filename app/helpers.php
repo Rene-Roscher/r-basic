@@ -35,15 +35,15 @@ function addMenuElement($display, $href, $icon = '', $permission = null)
     menu()->add(new \RServices\Helpers\Menu\MenuElement($display, $href, $icon, $permission));
 }
 
-function viewDataTables($route, array $columns, array $titles = null, $withAction = true)
+function viewDataTables($route, array $columns, array $titles = null, $buttons = null, $withAction = true)
 {
     $instance = \RServices\Helpers\Datatable::create();
     foreach ($columns as $column) $instance->put($column);
     $instance->setColumnNames($titles);
-    if ($withAction)
-        $instance->addAction();
+    if ($withAction) $instance->addAction();
     return view('misc.datatables', [
-        'view' => $instance->view($route)
+        'view' => $instance->view($route),
+        'buttons' => $buttons,
     ]);
 }
 function fontAwesome($class, $type = 'fa')
