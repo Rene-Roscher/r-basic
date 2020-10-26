@@ -80,7 +80,7 @@ class RouteServiceProvider extends ServiceProvider
         Router::macro('profile', function () {
             \Route::get('/profile', fn() => user()->updateForm(\route('manage.profile.update')))->name("manage.profile.view");
             \Route::post('/profile', function (Request $request) {
-                \user()->update($request->all());
+                \user()->updateProfile($request->all());
                 return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
             })->name("manage.profile.update");
         });

@@ -62,6 +62,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->syncRoles(array_key_exists('roles', $attributes) ? array_values($attributes['roles']) : []);
         return parent::update($attributes, $options);
     }
+	
+	public function updateProfile(array $attributes = [], array $options = [])
+    {
+        return parent::update($attributes, $options);
+    }
 
     public static function columnAction($entry, $name)
     {
