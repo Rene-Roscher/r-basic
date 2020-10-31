@@ -62,7 +62,7 @@ class FormContractBuilder
         return $this;
     }
 
-    public function add($name, $type, $label, $placeholder = null, $value = null, $min = null, $max = null, $step = null, $col = null, $nullable = false)
+    public function add($name, $type, $label = null, $placeholder = null, $value = null, $min = null, $max = null, $step = null, $col = null, $nullable = false)
     {
         $this->inputs .= view('misc.crud.form-group', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
         return $this;
@@ -99,7 +99,7 @@ class FormContractBuilder
         return $this;
     }
 
-    public function addFromArray(array $formFields, $source = null)
+    public function addFromArray(array $formFields, $source = null, $action = null, $submitTitle = null)
     {
         $obj = $source;
         $source = $source ? $source->toArray() : null;
@@ -150,7 +150,7 @@ class FormContractBuilder
                 array_key_exists('nullable', $args),
                 );
         }
-        return $this->make();
+        return $this->make($action, $submitTitle);
     }
 
     function selectTransform($args)

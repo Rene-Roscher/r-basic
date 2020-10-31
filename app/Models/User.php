@@ -40,6 +40,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name:roles|type:multiSelect|relation:role,name,name|col:6|only:update',
         'name:permissions|type:multiSelect|relation:permission,name,name|col:6|only:update',
     ];
+	
+	public static $profileFormFields = [
+		'name:name|type:text|col:6',
+		'name:email|type:email|col:6',
+	];
 
     public static $dataTablesFields = [
         'id' => 'ID',

@@ -26,6 +26,11 @@ class ButtonBuilder
         return $this->add('edit', $href, $title, $class);
     }
 
+	public function addWhen($condination, $href, $title = 'Edit', $class = 'primary')
+    {
+        return $condination ? $this->add('edit', $href, $title, $class) : $this;
+    }
+
     public function addBlank($href, $title = 'Edit', $class = 'primary')
     {
         return $this->add('blank', $href, $title, $class);

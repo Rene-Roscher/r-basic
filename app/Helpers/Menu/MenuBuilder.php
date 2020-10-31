@@ -22,8 +22,8 @@ class MenuBuilder extends MenuDropdown
 
     public static function model($model, $icon = 'fa fa-layer-group', $permission = true)
     {
-        return new MenuElement(ucwords(Str::snake(Str::plural(basename($model)), ' ')),
-            "manage." . ($name = Str::kebab(strtolower(basename($model)))) . ".view", $icon, ($permission ? "$name.list" : null));
+        return new MenuElement(ucwords(Str::snake(Str::plural(getRealFileName($model)), ' ')),
+            "manage." . ($name = Str::kebab(strtolower(getRealFileName($model)))) . ".view", $icon, ($permission ? "$name.list" : null));
     }
 
     public function render()

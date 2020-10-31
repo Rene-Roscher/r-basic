@@ -66,3 +66,11 @@ function getTypeOfValue($value)
             return 'text';
     }
 }
+function getRealFileName($class)
+{
+    $pathinfo = pathinfo($class);
+    $realFilename = null;
+    if (($count = count($ex = explode("\\", $pathinfo['filename']))) > 0)
+        $realFilename = $ex[$count-1];
+    return $realFilename;
+}

@@ -7,6 +7,7 @@ use RServices\Response\ResponseState;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -56,6 +57,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof UnauthorizedException)
+            return $request->ajax() ? respond()->addMessage($exception->getMessage(), 'error')->response() : back()->withErrors($exception->getMessage());
 		if (env('APP_DEBUG') && $request->ajax() && !$exception instanceof HttpResponseException && !$exception instanceof ValidationException)
             respond()->addMessage($exception->getMessage(), 'error')->response();
 		if ($exception instanceof ValidationException && $request->ajax())

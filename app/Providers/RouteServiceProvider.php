@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use RServices\Helpers\Button\ButtonBuilder;
+use RServices\Helpers\Crud\FormContractBuilder;
 use RServices\Http\Controllers\Crud\CrudController;
 use RServices\Models\Model;
+use RServices\Models\MonitorCategory;
 use RServices\User;
 
 class RouteServiceProvider extends ServiceProvider
@@ -35,8 +37,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
         Router::macro('crud', function ($model, $withPermission = true) {
-            $name = sprintf('%s.%s', 'manage', $crudName = strtolower(basename($model)));
-            \Route::prefix(Str::kebab(Str::plural(basename($model))))->group(function () use ($model, $name, $withPermission, $crudName) {
+            $name = sprintf('%s.%s', 'manage', $crudName = strtolower(getRealFileName($model)));
+            \Route::prefix(Str::kebab(Str::plural(getRealFileName($model))))->group(function () use ($model, $name, $withPermission, $crudName) {
                 $middleware = sprintf('permission:%s', $crudName);
                 \Route::get('/', fn() => viewDataTables(\route(sprintf('%s.list', $name)), array_keys($model::$dataTablesFields), array_values($model::$dataTablesFields), $model::getTableViewButtons()))
                     ->middleware($withPermission ? "$middleware.list" : [])->name("$name.view");
@@ -53,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
                         else $request->offsetSet('password', encrypt($request->all()['password']));
                     ($entry = new $model($request->all()))->save();
                     return respond()->addMessage($entry->createdMessage(), 'success')->setRedirect(\route(sprintf('%s.edit', $name), compact('entry')))->response();
-                })->middleware($withPermission ? "$middleware.create" : [])->name("$name.create");
+                })->middleware($withPermission ? "$middleware.create" : [])->middleware('throttle')->name("$name.create");
 
                 \Route::prefix('{entry}')->group(function () use ($model, $name, $withPermission, $middleware) {
                     \Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%s.update', $name), compact('entry'))))
@@ -63,7 +65,7 @@ class RouteServiceProvider extends ServiceProvider
                         $entry = $model::findOrFail($entry);
                         $entry->update($request->all());
                         return respond()->addMessage($entry->updatedMessage(), 'success')->response();
-                    })->middleware($withPermission ? "$middleware.edit" : [])->name("$name.update");
+                    })->middleware($withPermission ? "$middleware.edit" : [])->middleware('throttle')->name("$name.update");
 
                     \Route::get('/delete', function (Request $request, $entry) use ($model) {
                         $entry = $model::findOrFail($entry);
@@ -78,11 +80,11 @@ class RouteServiceProvider extends ServiceProvider
             Route::get('signBack', [CrudController::class, 'signBack'])->name('manage.user.signBack');
         });
         Router::macro('profile', function () {
-            \Route::get('/profile', fn() => user()->updateForm(\route('manage.profile.update')))->name("manage.profile.view");
+            \Route::get('/profile', fn() => FormContractBuilder::create()->addFromArray(User::$profileFormFields, \user(), \route('manage.profile.update'), __('Save')))->name("manage.profile.view");
             \Route::post('/profile', function (Request $request) {
                 \user()->updateProfile($request->all());
                 return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
-            })->name("manage.profile.update");
+            })->middleware('throttle')->name("manage.profile.update");
         });
     }
 

@@ -36,7 +36,7 @@ trait FormContract
 
     public static function getTableViewButtons()
     {
-        return ButtonBuilder::create()->addEdit(\route(sprintf('manage.%s.create', strtolower(basename(static::class)))), '<i class="fa fa-plus mr-1"></i> Create', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make();
+        return ButtonBuilder::create()->addEdit(\route(sprintf('manage.%s.create', strtolower(getRealFileName(static::class)))), '<i class="fa fa-plus mr-1"></i> Create', 'dark col-12 col-xl-2 col-md-12 col-xs-12 mb-2')->make();
     }
 
     public static function columnAction($entry, $name)
@@ -55,7 +55,7 @@ trait FormContract
         return $dataTables->addColumn('action', fn($entry) => $entry::columnAction($entry, $name))->make();
     }
 
-    public static function dataTablesTransformer()
+    public static function dataTablesTransformer($action)
     {
         return null;
     }
