@@ -26,9 +26,14 @@ class ButtonBuilder
         return $this->add('edit', $href, $title, $class);
     }
 
-	public function addWhen($condination, $href, $title = 'Edit', $class = 'primary')
+    public function addWhen($condination, $href, $title = 'Edit', $class = 'primary')
     {
         return $condination ? $this->add('edit', $href, $title, $class) : $this;
+    }
+
+    public function addJsWhen($condination, $href, $title = 'Edit', $class = 'primary')
+    {
+        return $condination ? $this->add('addJs', $href, $title, $class) : $this;
     }
 
     public function addBlank($href, $title = 'Edit', $class = 'primary')
@@ -37,11 +42,6 @@ class ButtonBuilder
     }
 
     public function addDelete($href, $title = 'Delete', $class = 'danger')
-    {
-        return $this->add('delete', $href, $title, $class);
-    }
-
-    public function addJsDelete($href, $title = 'Delete', $class = 'danger')
     {
         return $this->add('delete', $href, $title, $class);
     }
