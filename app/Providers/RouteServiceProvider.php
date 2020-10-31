@@ -35,7 +35,6 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        parent::boot();
         Router::macro('crud', function ($model, $withPermission = true) {
             $name = sprintf('%s.%s', 'manage', $crudName = strtolower(getRealFileName($model)));
             \Route::prefix(Str::kebab(Str::plural(getRealFileName($model))))->group(function () use ($model, $name, $withPermission, $crudName) {
@@ -86,6 +85,7 @@ class RouteServiceProvider extends ServiceProvider
                 return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
             })->middleware('throttle')->name("manage.profile.update");
         });
+		parent::boot();
     }
 
     /**

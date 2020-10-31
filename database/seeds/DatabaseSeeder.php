@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RolePermissionSeeder::class);
-        ($user = new \RServices\User([
+        ($user = new \RServices\Models\User([
             'email' => 'admin@example.com',
             'name' => 'Admin',
             'password' => \Illuminate\Support\Facades\Hash::make('123admin456'),

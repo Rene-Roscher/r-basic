@@ -3,6 +3,7 @@
 namespace RServices\Providers;
 
 use RServices\Helpers\Menu\MenuBuilder;
+use RServices\Helpers\FontAwesome;
 use RServices\Facades\MenuFacade as Menu;
 use Illuminate\Support\ServiceProvider;
 

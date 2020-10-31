@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => RServices\User::class,
+            'model' => \RServices\Models\User::class,
         ],
 
         // 'users' => [
