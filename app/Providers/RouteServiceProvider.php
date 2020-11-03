@@ -5,15 +5,11 @@ namespace RServices\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use RServices\Helpers\Button\ButtonBuilder;
 use RServices\Helpers\Crud\FormContractBuilder;
 use RServices\Http\Controllers\Crud\CrudController;
-use RServices\Models\Model;
-use RServices\Models\MonitorCategory;
-use RServices\User;
+use RServices\Models\User;
 
 class RouteServiceProvider extends ServiceProvider
 {

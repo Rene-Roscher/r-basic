@@ -2,11 +2,10 @@
 
 namespace RServices\Transformers\DataTables;
 
-use App\DataTables\SessionTransformer;
 use League\Fractal\TransformerAbstract;
 use RServices\Models\Session;
 
-class SessionTransformerTransformer extends AbstractTransformer
+class SessionTransformer extends AbstractTransformer
 {
 
     public function transform(Session $session)

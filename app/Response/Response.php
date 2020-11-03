@@ -4,7 +4,6 @@
 namespace RServices\Response;
 
 
-use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class Response
@@ -53,7 +52,7 @@ class Response
 
     public function setData($data): Response
     {
-        $this->data = is_array($data) ? $data : [$data];
+        $this->data = $data;
         return $this;
     }
 
