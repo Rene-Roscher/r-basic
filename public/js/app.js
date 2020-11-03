@@ -119745,8 +119745,8 @@ jquery__WEBPACK_IMPORTED_MODULE_0__('[data-toggle="tinymce"]').each(function (_,
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Rene\Desktop\LIVCK - INFRA\livck-cp\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Rene\Desktop\LIVCK - INFRA\livck-cp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Rene\Desktop\rccounting-master\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Rene\Desktop\rccounting-master\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

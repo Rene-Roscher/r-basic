@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
+        "@nguyenthanh1995/fontawesomepro": "0.0.3",
         "@popperjs/core": "^2.4.4",
         "bootstrap": "^4.5.2",
         "datatables.net": "^1.10.21",
