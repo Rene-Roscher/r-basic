@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
 
     protected function sendResetResponse(Request $request, $response)
     {
-        return respond()->addMessage(trans($response), 'success')->response();
+        return respond()->addMessage(trans($response), 'success')->setRedirect(route('manage.dashboard'))->response();
     }
 
     protected function sendResetFailedResponse(Request $request, $response)

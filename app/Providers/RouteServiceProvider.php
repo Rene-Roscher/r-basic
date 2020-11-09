@@ -75,9 +75,15 @@ class RouteServiceProvider extends ServiceProvider
             Route::get('signBack', [CrudController::class, 'signBack'])->name('manage.user.signBack');
         });
         Router::macro('profile', function () {
-            \Route::get('/profile', fn() => FormContractBuilder::create()->addFromArray(User::$profileFormFields, \user(), \route('manage.profile.update'), __('Save')))->name("manage.profile.view");
+            \Route::get('/profile', fn() => FormContractBuilder::create()->addFromArray(User::$profileFormFields, \user(), \route('manage.profile.update'), __('Save')))->name('manage.profile.view');
             \Route::post('/profile', function (Request $request) {
-                \user()->updateProfile($request->all());
+                $data = $request->toArray();
+                if (array_key_exists('password', $data) && !empty($data['password'])) {
+                    if (strlen($data['password']) < 8)
+                        respond()->addMessage('The password should be at least 8 characters', 'error')->response();
+                    $data['password'] = \Hash::make($data['password']);
+                } else $data = \Arr::except($data, 'password');
+                \user()->updateProfile($data);
                 return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
             })->middleware('throttle')->name("manage.profile.update");
         });

@@ -81,4 +81,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             ->addDelete(\route(sprintf('%s.delete', $name), compact('entry')))->make();
     }
 
+	public function sendRequestedPasswordResetNotification()
+    {
+        $token = \Password::getRepository()->create(auth()->user());
+        user()->sendPasswordResetNotification($token);
+    }
+
 }
