@@ -14,4 +14,7 @@ return [
 
     'failed'   => 'Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.',
     'throttle' => 'Zu viele Loginversuche. Versuchen Sie es bitte in :seconds Sekunden nochmal.',
+    'password_reset_send' => 'Der Passwort Zurücksetzungslink wurde ihnen per Mail geschickt.',
+
+    'password_reset_throttle' => 'Sie können nur alle 3 Stunden eine anfrage auf einen Passwort-Zurücksetzungs-Link stellen!',
 ];

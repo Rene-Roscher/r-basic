@@ -2,6 +2,8 @@
 
 return [
 
+	'password_reset_throttle' => '3 hours',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

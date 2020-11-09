@@ -15,6 +15,8 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'disallow_auth' => 'You cannot login because your account has been restricted.',
 
-
+    'password_reset_throttle' => 'Too many password-reset attempts.',
+    'password_reset_send' => 'Too many password-reset attempts.',
 ];

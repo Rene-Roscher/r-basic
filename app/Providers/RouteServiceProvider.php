@@ -87,6 +87,15 @@ class RouteServiceProvider extends ServiceProvider
                 return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
             })->middleware('throttle')->name("manage.profile.update");
         });
+		Router::macro('passwordReset', function () {
+            Route::post('/', function () {
+                if (cache()->has($key = "user_password_reset_".\user()->id))
+                    return respond()->addMessage(trans('auth.password_reset_throttle'), 'error')->response();
+                \user()->sendRequestedPasswordResetNotification();
+                cache()->put($key, now(), now()->add(config('auth.password_reset_throttle')));
+                return respond()->addMessage(trans('auth.password_reset_send'), 'success')->response();
+            })->name('manage.password.reset');
+        });
 		parent::boot();
     }
 
