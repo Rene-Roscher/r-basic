@@ -86,5 +86,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $token = \Password::getRepository()->create(auth()->user());
         user()->sendPasswordResetNotification($token);
     }
+	
+	public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \RServices\Notifications\VerifyEmail());
+    }
 
 }
