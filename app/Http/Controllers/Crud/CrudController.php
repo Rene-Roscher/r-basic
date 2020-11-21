@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Nette\Caching\Cache;
 use RServices\Http\Controllers\Controller;
 use RServices\Providers\RouteServiceProvider;
-use RServices\User;
+use RServices\Models\User;
 
 class CrudController extends Controller
 {

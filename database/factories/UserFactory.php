@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use RServices\User;
+use RServices\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

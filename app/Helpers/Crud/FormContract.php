@@ -5,7 +5,7 @@ namespace RServices\Helpers\Crud;
 
 
 use RServices\Helpers\Button\ButtonBuilder;
-use RServices\User;
+use RServices\Models\User;
 
 trait FormContract
 {
