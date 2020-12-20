@@ -63,13 +63,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function update(array $attributes = [], array $options = [])
     {
-        $this->syncPermissions(array_key_exists('permissions', $attributes) ? array_values($attributes['permissions']) : []);
-        $this->syncRoles(array_key_exists('roles', $attributes) ? array_values($attributes['roles']) : []);
-        return parent::update($attributes, $options);
-    }
-	
-	public function updateProfile(array $attributes = [], array $options = [])
-    {
+        if (($options['sync-permissions'] ?? false)) {
+            $this->syncPermissions(array_key_exists('permissions', $attributes) ? array_values($attributes['permissions']) : []);
+            $this->syncRoles(array_key_exists('roles', $attributes) ? array_values($attributes['roles']) : []);
+        }
         return parent::update($attributes, $options);
     }
 

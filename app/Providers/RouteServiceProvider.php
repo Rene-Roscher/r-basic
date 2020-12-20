@@ -56,11 +56,13 @@ class RouteServiceProvider extends ServiceProvider
                     \Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%s.update', $name), compact('entry'))))
                         ->middleware($withPermission ? "$middleware.show" : [])->name("$name.edit");
 
-                    \Route::post('/update', function (Request $request, $entry) use ($model) {
+                    Route::post('/update', function (Request $request, $entry) use ($model) {
                         $entry = $model::findOrFail($entry);
-                        $entry->update($request->all());
+                        if ($model === User::class)
+                            $entry->update($request->all(), ['sync-permissions' => true]);
+                        else $entry->update($request->all());
                         return respond()->addMessage($entry->updatedMessage(), 'success')->response();
-                    })->middleware($withPermission ? "$middleware.edit" : [])->middleware('throttle')->name("$name.update");
+                    })->middleware($withPermission ? "$middleware.edit" : [])->name("$name.update");
 
                     \Route::get('/delete', function (Request $request, $entry) use ($model) {
                         $entry = $model::findOrFail($entry);

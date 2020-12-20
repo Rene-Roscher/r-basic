@@ -62,7 +62,7 @@ trait HasProfilePhoto
      */
     protected function defaultProfilePhotoUrl()
     {
-        return "https://avatars.r-services.eu".$this->id;
+        return "https://avatars.r-services.eu/".$this->id;
 //        return 'https://ui-avatars.com/api/?name='.urlencode($this->id).'&color=7F9CF5&background=EBF4FF';
     }
 
