@@ -2,13 +2,16 @@
 
 namespace RServices\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use RServices\Helpers\Crud\FormContractBuilder;
+use RServices\Helpers\Button\ButtonBuilder;
 use RServices\Http\Controllers\Crud\CrudController;
+use RServices\Models\Model;
 use RServices\Models\User;
 
 class RouteServiceProvider extends ServiceProvider
@@ -31,29 +34,31 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        parent::boot();
+        //
         Router::macro('crud', function ($model, $withPermission = true) {
             $name = sprintf('%s.%s', 'manage', $crudName = strtolower(getRealFileName($model)));
-            \Route::prefix(Str::kebab(Str::plural(getRealFileName($model))))->group(function () use ($model, $name, $withPermission, $crudName) {
+            Route::prefix(Str::kebab(Str::plural(getRealFileName($model))))->group(function () use ($model, $name, $withPermission, $crudName) {
                 $middleware = sprintf('permission:%s', $crudName);
-                \Route::get('/', fn() => viewDataTables(\route(sprintf('%s.list', $name)), array_keys($model::$dataTablesFields), array_values($model::$dataTablesFields), $model::getTableViewButtons()))
+                Route::get('/', fn() => viewDataTables(\route(sprintf('%s.list', $name)), array_keys($model::$dataTablesFields), array_values($model::$dataTablesFields), $model::getTableViewButtons()))
                     ->middleware($withPermission ? "$middleware.list" : [])->name("$name.view");
 
-                \Route::get('/list', fn() => $model::toDataTables($model, $name))
+                Route::get('/list', fn() => $model::toDataTables($model, $name))
                     ->middleware($withPermission ? "$middleware.list" : [])->name("$name.list");
 
-                \Route::get('/create', fn(Request $request) => $model::createForm(\route(sprintf('%s.create', $name))))
+                Route::get('/create', fn(Request $request) => $model::createForm(\route(sprintf('%s.store', $name))))
                     ->middleware($withPermission ? "$middleware.create" : [])->name("$name.create");
 
-                \Route::post('/create', function (Request $request) use ($model, $name) {
+                Route::post('/store', function (Request $request) use ($model, $name) {
                     if (array_key_exists('password', $request->all()))
                         if ($model == User::class) $request->offsetSet('password', \Hash::make($request->all()['password']));
                         else $request->offsetSet('password', encrypt($request->all()['password']));
                     ($entry = new $model($request->all()))->save();
                     return respond()->addMessage($entry->createdMessage(), 'success')->setRedirect(\route(sprintf('%s.edit', $name), compact('entry')))->response();
-                })->middleware($withPermission ? "$middleware.create" : [])->middleware('throttle')->name("$name.create");
+                })->middleware($withPermission ? "$middleware.create" : [])->name("$name.store");
 
-                \Route::prefix('{entry}')->group(function () use ($model, $name, $withPermission, $middleware) {
-                    \Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%s.update', $name), compact('entry'))))
+                Route::prefix('{entry}')->group(function () use ($model, $name, $withPermission, $middleware) {
+                    Route::get('/edit', fn(Request $request, $entry) => $model::findOrFail($entry)->updateForm(\route(sprintf('%s.update', $name), compact('entry'))))
                         ->middleware($withPermission ? "$middleware.show" : [])->name("$name.edit");
 
                     Route::post('/update', function (Request $request, $entry) use ($model) {
@@ -64,41 +69,29 @@ class RouteServiceProvider extends ServiceProvider
                         return respond()->addMessage($entry->updatedMessage(), 'success')->response();
                     })->middleware($withPermission ? "$middleware.edit" : [])->name("$name.update");
 
-                    \Route::get('/delete', function (Request $request, $entry) use ($model) {
+                    Route::get('/delete', function (Request $request, $entry) use ($model) {
                         $entry = $model::findOrFail($entry);
                         $entry->delete();
                         return respond()->addMessage($entry->deletedMessage(), 'success')->response();
                     })->middleware($withPermission ? "$middleware.delete" : [])->name("$name.delete");
                 });
             });
-            Route::prefix('user/{entry}')->group(function () {
-                Route::get('signInto', [CrudController::class, 'signInto'])->middleware("permission:user.signinto")->name('manage.user.signInto');
-            });
-            Route::get('signBack', [CrudController::class, 'signBack'])->name('manage.user.signBack');
+            if($model == User::class) {
+                Route::prefix('user/{entry}')->group(function () {
+                    Route::get('signInto', [CrudController::class, 'signInto'])->middleware("permission:user.signinto")->name('manage.user.signInto');
+                });
+                Route::get('signBack', [CrudController::class, 'signBack'])->name('manage.user.signBack');
+            }
         });
-        Router::macro('profile', function () {
-            \Route::get('/profile', fn() => FormContractBuilder::create()->addFromArray(User::$profileFormFields, \user(), \route('manage.profile.update'), __('Save')))->name('manage.profile.view');
-            \Route::post('/profile', function (Request $request) {
-                $data = $request->toArray();
-                if (array_key_exists('password', $data) && !empty($data['password'])) {
-                    if (strlen($data['password']) < 8)
-                        respond()->addMessage('The password should be at least 8 characters', 'error')->response();
-                    $data['password'] = \Hash::make($data['password']);
-                } else $data = \Arr::except($data, 'password');
-                \user()->updateProfile($data);
-                return respond()->addMessage('Profile was successfuly saved.', 'success')->response();
-            })->middleware('throttle')->name("manage.profile.update");
-        });
-		Router::macro('passwordReset', function () {
+        Router::macro('passwordReset', function () {
             Route::post('/', function () {
                 if (cache()->has($key = "user_password_reset_".\user()->id))
                     return respond()->addMessage(trans('auth.password_reset_throttle'), 'error')->response();
-                \user()->sendRequestedPasswordResetNotification();
                 cache()->put($key, now(), now()->add(config('auth.password_reset_throttle')));
+                \user()->sendRequestedPasswordResetNotification();
                 return respond()->addMessage(trans('auth.password_reset_send'), 'success')->response();
             })->name('manage.password.reset');
         });
-		parent::boot();
     }
 
     /**
@@ -132,7 +125,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAuthWeb($prefix, $namespace = '')
     {
         Route::prefix($prefix)
-            ->middleware(['web', 'auth'])
+            ->middleware(['web', 'auth', 'verified'])
             ->namespace($this->namespace.$namespace)
             ->group(base_path("routes/${prefix}.php"));
     }
