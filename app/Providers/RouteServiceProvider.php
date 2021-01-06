@@ -92,6 +92,8 @@ class RouteServiceProvider extends ServiceProvider
                 return respond()->addMessage(trans('auth.password_reset_send'), 'success')->response();
             })->name('manage.password.reset');
         });
+
+        Route::get('/logout', [\RServices\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
     }
 
     /**

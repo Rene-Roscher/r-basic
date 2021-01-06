@@ -15,9 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/logout', fn() => !Auth::logout() ? back()->withSuccess(strval('Sie haben sich erfolgreich abgemeldet.')) : abort(401))->name('logout')->middleware('auth');
 
 Route::view('/', 'welcome');
-
-Route::view('/home', 'home')->middleware(['web', 'auth'])->name('home');
-Route::get('/data', fn() => datatables(\RServices\User::all())->make())->middleware(['web', 'auth'])->name('datatable');
