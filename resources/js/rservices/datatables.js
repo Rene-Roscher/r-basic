@@ -2,15 +2,15 @@ const datatables = {
     init() {
         $('[data-toggle="datatable"]').each((_, element) => {
             let e = $(element);
-            e.DataTable(this.options(e.data('url'), e.data('columns')));
+            e.DataTable(this.options(e.data('url'), e.data('columns'), e.data('serverSide')));
         });
     },
-    options(ajax, columns) {
+    options(ajax, columns, serverSide) {
         return {
             language: {
                 url: window.location.origin + "/datatables/language.json",
             },
-            serverSide: true,
+            serverSide,
             processing: true,
             autoWidth: true,
             ajax: ajax,
@@ -22,10 +22,10 @@ const datatables = {
         setInterval(backend.datatables.reload(table) && $('#' + $(table)[0].id + '_processing').toggle(), interval);
     },
     reloadAll() {
-        $('[data-toggle="datatable"]').each((_, element) => this.reload(element));
+        $('[data-toggle="datatable"]').each((_, element) => $(element).DataTable().ajax().reload());
     },
     reload(table) {
-        $(table).DataTable().ajax.reload();
+        $(table).DataTable().ajax().reload();
     },
 };
 export {datatables};

@@ -9,17 +9,37 @@ class StatusPill
 
     public static function success($text = null)
     {
-        return "<span class='badge-pill badge-primary text-white'>{$text}</span>";
+        return self::make('success', $text);
+    }
+
+    public static function primary($text = null)
+    {
+        return self::make('primary', $text);
+    }
+
+    public static function warning($text = null)
+    {
+        return self::make('warning', $text);
+    }
+
+    public static function info($text = null)
+    {
+        return self::make('info', $text);
     }
 
     public static function danger($text = null)
     {
-        return "<span class='badge-pill badge-danger text-white'>{$text}</span>";
+        return self::make('danger', $text);
     }
 
     public static function dark($text = null)
     {
-        return "<span class='badge-pill badge-dark text-white'>{$text}</span>";
+        return self::make('dark', $text);
+    }
+
+    public static function make($color, $text)
+    {
+        return "<span class='badge bg-$color'>$text</span>";
     }
 
 }

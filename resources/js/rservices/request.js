@@ -1,12 +1,17 @@
 import {notify} from './';
-const handle = async (request, button = null) => {
+
+const handle = async (request, button = null, callback = null) => {
     var state = rservices.buttonState.setPending(button);
     let response = await request;
-    let keys = Object.keys(response.messages);
-    if (keys.length > 0)
-        keys.forEach(key => {
-            response.messages[key].forEach(v => notify[key](v))
-        });
+    if (callback) {
+        callback(response);
+    } else {
+        let keys = Object.keys(response.messages);
+        if (keys.length > 0)
+            keys.forEach(key => {
+                response.messages[key].forEach(v => notify[key](v))
+            });
+    }
     if (response.redirect != null) setTimeout(() => location.href = response.redirect, 300);
     rservices.cache.isRequesting = false;
     state.setDone();
@@ -55,6 +60,67 @@ const request = {
             request: axios.delete(url).then(res => res.data).catch(e => e.response.data),
             async handle(button) {
                 return await handle(this.request, button);
+            }
+        };
+    },
+    deleteConfirm(url, title = 'Bist du dir sicher?', text = 'Diese Aktion kann nicht rückgängig gemacht werden!', confirmButtonText = 'Ausführen', icon = 'warning') {
+        return {
+            async handle(button) {
+                swal.fire({
+                    title,
+                    text,
+                    icon,
+                    showCancelButton: true,
+                    confirmButtonText
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        await handle(axios.delete(url).then(res => res.data).catch(e => e.response.data), button, (response) => {
+                            let keys = Object.keys(response.messages);
+                            if (keys.length > 0) {
+                                keys.forEach(key => {
+                                    if (response.messages[key].length > 0) {
+                                        swal.fire(
+                                            key == 'success' ? 'Erfolgreich!' : (key == 'warning' ? 'Achtung!' : 'Fehler!'),
+                                            response.messages[key][0],
+                                            key
+                                        )
+                                    }
+                                });
+                            }
+                        })
+
+                    }
+                })
+            }
+        };
+    },
+    postConfirm(url, data = {}, title = 'Bist du dir sicher?', text = 'Diese Aktion kann nicht rückgängig gemacht werden!', confirmButtonText = 'Ausführen', icon = 'warning') {
+        return {
+            async handle(button) {
+                swal.fire({
+                    title,
+                    text,
+                    icon,
+                    showCancelButton: true,
+                    confirmButtonText
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        await handle(axios.post(url, data).then(res => res.data).catch(e => e.response.data), button, (response) => {
+                            let keys = Object.keys(response.messages);
+                            if (keys.length > 0) {
+                                keys.forEach(key => {
+                                    if (response.messages[key].length > 0) {
+                                        swal.fire(
+                                            key == 'success' ? 'Erfolgreich!' : (key == 'warning' ? 'Achtung!' : 'Fehler!'),
+                                            response.messages[key][0],
+                                            key
+                                        )
+                                    }
+                                });
+                            }
+                        })
+                    }
+                })
             }
         };
     },

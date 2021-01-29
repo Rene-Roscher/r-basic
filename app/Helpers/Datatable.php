@@ -47,8 +47,7 @@ class Datatable
 
     public function addAction()
     {
-        if (!array_key_exists('action', $this->columnNames))
-            $this->columnNames['action'] = '#';
+        $this->columnNames[] = '#';
         return $this->put('action', false, false);
     }
 
@@ -63,16 +62,16 @@ class Datatable
         return $this;
     }
 
-    public function setServerSideProcessing()
+    public function setServerSideProcessing($serverSide)
     {
-        $this->serverSide = true;
+        $this->serverSide = $serverSide;
         return $this;
     }
 
     public function view($ajax, ...$columnNames)
     {
         if (count($this->columnNames) > 0)
-            $columnNames = $this->columnNames;
+            $columnNames = array_unique(array_merge($columnNames, $this->columnNames));
         $columns = $this->get();
         $reload = $this->reload;
         $serverSide = $this->serverSide;
