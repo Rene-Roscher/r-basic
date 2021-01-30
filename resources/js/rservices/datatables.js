@@ -19,13 +19,13 @@ const datatables = {
         }
     },
     setReloadInterval(table, interval) {
-        setInterval(backend.datatables.reload(table) && $('#' + $(table)[0].id + '_processing').toggle(), interval);
+        setInterval(this.reload(table) && $('#' + $(table)[0].id + '_processing').toggle(), interval);
     },
     reloadAll() {
-        $('[data-toggle="datatable"]').each((_, element) => $(element).DataTable().ajax().reload());
+        $('[data-toggle="datatable"]').each((_, element) => $(element).DataTable().ajax.reload());
     },
     reload(table) {
-        $(table).DataTable().ajax().reload();
+        $(table).DataTable().ajax.reload();
     },
 };
 export {datatables};
