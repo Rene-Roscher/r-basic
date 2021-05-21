@@ -62,7 +62,7 @@ class FormContractBuilder
         return $this;
     }
 
-    public function add($name, $type, $label = null, $placeholder = null, $value = null, $min = null, $max = null, $step = null, $col = null, $nullable = false)
+    public function add($name, $type, $label, $placeholder = null, $value = null, $min = null, $max = null, $step = null, $col = null, $nullable = false)
     {
         $this->inputs .= view('misc.crud.form-group', array_merge(get_defined_vars(), ['col' => $col ? (is_numeric($col) ? "col-$col" : $col) : $this->col]))->render();
         return $this;
@@ -99,7 +99,7 @@ class FormContractBuilder
         return $this;
     }
 
-    public function addFromArray(array $formFields, $source = null, $action = null, $submitTitle = null)
+    public function addFromArray(array $formFields, $source = null)
     {
         $obj = $source;
         $source = $source ? $source->toArray() : null;
@@ -117,7 +117,8 @@ class FormContractBuilder
             if ($args['type'] == 'select' && array_key_exists('options', $args))
                 $this->addSelect($args['name'], $label,
                     $this->selectTransform($args['options']),
-                    array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null),
+//                    array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null),
+                    $source && array_key_exists($args['name'], $source) ? $source[$args['name']] : (array_key_exists('value', $args) ? $args['value'] : null),
                     array_key_exists('col', $args) ? $args['col'] : null, array_key_exists('nullable', $args));
             else if ($args['type'] == 'select' && array_key_exists('relation', $args)) {
                 $valueKey = count($relationVars = explode(',', $args['relation'])) != 0 ? ($relationVars)[1] : 'id';
@@ -126,7 +127,7 @@ class FormContractBuilder
                 $this->addRelation(
                     $args['name'], $label,
                     $this->selectRelationTransform((model_path(str_replace(' ', '', ucwords(Str::snake($args['relation'], ' ')))))::all()->toArray(), $valueKey, $primaryKey),
-                    array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null),
+                    $source && array_key_exists($args['name'], $source) ? $source[$args['name']] : (array_key_exists('value', $args) ? $args['value'] : null),
                     array_key_exists('col', $args) ? $args['col'] : null, array_key_exists('nullable', $args));
             } else if ($args['type'] == 'multiSelect' && array_key_exists('relation', $args)) {
                 $valueKey = count($relationVars = explode(',', $args['relation'])) != 0 ? ($relationVars)[1] : 'id';
@@ -142,7 +143,7 @@ class FormContractBuilder
             } else $this->add($args['name'], $args['type'],
                 $label,
                 array_key_exists('placeholder', $args) ? $args['placeholder'] : null,
-                array_key_exists('value', $args) ? $args['value'] : ($source && array_key_exists($args['name'], $source) ? $source[$args['name']] : null),
+                $source && array_key_exists($args['name'], $source) ? $source[$args['name']] : (array_key_exists('value', $args) ? $args['value'] : null),
                 array_key_exists('min', $args) ? $args['min'] : null,
                 array_key_exists('max', $args) ? $args['max'] : null,
                 array_key_exists('step', $args) ? $args['step'] : null,
@@ -150,7 +151,7 @@ class FormContractBuilder
                 array_key_exists('nullable', $args),
                 );
         }
-        return $this->make($action, $submitTitle);
+        return $this->make();
     }
 
     function selectTransform($args)
